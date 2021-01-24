@@ -8,8 +8,29 @@
 	</head>
 
 	<body>
-		
-		<div class="row mb-2">
+
+		<header id="titlebar">
+			<div id="drag-region">
+
+				<div id="window-title">
+					<span class="text-neutral"><img src="icon.ico" />Movie-ex</span>
+				  </div>
+
+				<div id="window-controls">
+
+					<div class="button" id="min-button">
+					  <img class="icon" srcset="icons/min-w-10.png 1x, icons/min-w-12.png 1.25x, icons/min-w-15.png 1.5x, icons/min-w-15.png 1.75x, icons/min-w-20.png 2x, icons/min-w-20.png 2.25x, icons/min-w-24.png 2.5x, icons/min-w-30.png 3x, icons/min-w-30.png 3.5x" draggable="false" />
+					</div>
+			  
+					<div class="button" id="close-button">
+					  <img class="icon" srcset="icons/close-w-10.png 1x, icons/close-w-12.png 1.25x, icons/close-w-15.png 1.5x, icons/close-w-15.png 1.75x, icons/close-w-20.png 2x, icons/close-w-20.png 2.25x, icons/close-w-24.png 2.5x, icons/close-w-30.png 3x, icons/close-w-30.png 3.5x" draggable="false" />
+					</div>
+			  
+				</div>
+			</div>
+		</header>
+
+		<div class="row mb-2 p-2">
 			<div class="col">
 				<div id="readme">
 					<div class="lambda-block lambda-block-red">
@@ -24,7 +45,7 @@
 			</div>
 		</div>
 
-		<div class="row mb-2">
+		<div class="row mb-2 p-2">
 			<div class="col-8">
 				<div id="settings" class="lambda-block lambda-block-orange">
 					<div class="head">
@@ -35,7 +56,7 @@
 
 						<div class="setting">
 							<div class="pretty p-switch p-fill">
-								<input type="checkbox" value="1" name="rarExtraction" />
+								<input type="checkbox" value="1" name="rarExtraction" checked />
 								<div class="state">
 									<label class="text-neutral"><span class="text">Extract <code>.rar</code> files (if you choose to not extract, no <code>.rar</code> files will be deleted)</span></label>
 								</div>
@@ -44,7 +65,7 @@
 
 						<div class="setting">
 							<div class="pretty p-switch p-fill">
-								<input type="checkbox" value="1" name="posterDownload" />
+								<input type="checkbox" value="1" name="posterDownload" checked />
 								<div class="state">
 									<label class="text-neutral"><span class="text">Download poster file</label>
 								</div>
@@ -68,7 +89,7 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row p-2">
 			<div class="col">
 				<div id="logoutput" class="lambda-block lambda-block-green">
 					<div class="head">

@@ -76,6 +76,13 @@ const renderer = merge(base, {
         {
           from: './src/assets/readme.md',
           to: buildPath
+        }, {
+          from: './src/assets/icons',
+          to: path.join(buildPath, '/icons')
+        },
+        {
+          from: './src/assets/icon.ico',
+          to: buildPath
         }
       ],
     })

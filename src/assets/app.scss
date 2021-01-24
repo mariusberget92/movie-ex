@@ -19,10 +19,91 @@ $colors: (
         }
     }
 }
+  
+#titlebar {
+    display:block;
+    height:32px;
+    width:100%;
+    background:$block-body-bg;
+
+    #drag-region {
+        width:100%;
+        height:100%;
+        -webkit-app-region:drag;
+        display:grid;
+        grid-template-columns:auto 138px;
+          
+        #window-title {
+            grid-column:1;
+            display:flex;
+            align-items:center;
+            margin-left:8px;
+            overflow:hidden;
+            font-size:.8rem;
+
+            span {
+                overflow:hidden;
+                text-overflow:ellipsis;
+                white-space:nowrap;
+                font-weight:700;
+                line-height:1.5;
+
+                img {
+                    width:64px;
+                    margin-right:12px;
+                    margin-top:-1px;
+                }
+            }
+        }
+
+        #window-controls {
+            -webkit-app-region: no-drag;
+            display:grid;
+            grid-template-columns:repeat(2, 46px);
+            position:absolute;
+            top:0;
+            right:0;
+            height:32px;
+
+            .button {
+                grid-row:1 / span 1;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                width:100%;
+                height:100%;
+                user-select: none;
+                
+                &:hover {   
+                    background:rgba(255,255,255,0.1);
+                }
+
+                &:active {
+                    background:rgba(255,255,255,0.2);
+                }
+
+                &#min-button {
+                    grid-column:1;
+                }
+
+                &#close-button {
+                    grid-column:2;
+                    
+                    &:hover {
+                        background:map-get($map: $colors, $key: "red");
+                    }
+
+                    &:active {
+                        background:lighten(map-get($map: $colors, $key: "red"), 5%);
+                    }
+                }
+            }
+        }
+    }
+}
 
 body {
     font-family:'Roboto', sans-serif;
-    padding:10px;
     background-color:$body-bg;
     overflow:hidden;
 }
@@ -156,8 +237,8 @@ body {
     }
 }
 
-.ps__rail-y {
-    background:transparent;
+.ps .ps__rail-x:hover, .ps .ps__rail-y:hover, .ps .ps__rail-x:focus, .ps .ps__rail-y:focus, .ps .ps__rail-x.ps--clicking, .ps .ps__rail-y.ps--clicking {
+    background:transparent!important;
 }
 
 #readme {
@@ -198,7 +279,7 @@ code {
         &:last-child {
             margin-bottom:0;
         }
-        
+
         .pretty {
             .state {
                 label {

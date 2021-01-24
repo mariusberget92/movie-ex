@@ -156,7 +156,7 @@ export class Movie {
                 await this.downloadPoster();
             }
 
-            this.log('<hr class="log-sep" />');
+            this.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------', 'text-neutral');
             resolve(`${language[Config.language].movieProcessSuccess}${this.#movie.tags.title}`);
 
         });

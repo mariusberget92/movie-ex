@@ -17,6 +17,8 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import showdown from 'showdown';
 import { readFileSync } from 'fs';
 const converter = new showdown.Converter();
+const remote = require('electron').remote;
+const win = remote.getCurrentWindow();
 
 // When DOM is loaded, run the app
 document.addEventListener("DOMContentLoaded", function() {
@@ -63,6 +65,16 @@ document.addEventListener("DOMContentLoaded", function() {
         return false;
     };
     
+    // Minimize button
+    document.getElementById('min-button').addEventListener("click", event => {
+        win.minimize();
+    });
+
+    // Close button
+    document.getElementById('close-button').addEventListener("click", event => {
+        win.close();
+    });
+
     // Open external URLS
     addEvent(document, 'click', 'a[href]', function(e) {
         shell.openExternal(e.target.href);

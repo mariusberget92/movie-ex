@@ -45,13 +45,14 @@ app.on('ready', () => {
 	win = new BrowserWindow({
 		title: 'movie-ex',
 		width: 990,
-		height: 915,
+		height: 882,
 		resizable: false,
 		icon: join(__dirname, './assets/icon.ico'),
-
+		frame: false,
 		webPreferences: {
 			nodeIntegration: true,
-			webSecurity: false
+			webSecurity: false,
+			enableRemoteModule: true
 		}
 	});
 
@@ -63,7 +64,7 @@ app.on('ready', () => {
 	});
 
 	// Dev tools
-	win.openDevTools();
+	//win.openDevTools();
 
 });
 
