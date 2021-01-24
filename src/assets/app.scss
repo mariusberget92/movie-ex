@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400&display=swap');
+
+$body-bg:#3a3a3a;
+$block-head-bg:#282828;
+$block-body-bg:#1f1f1f;
+$colors: (
+    "green": #83ac47,
+    "blue": #379da9,
+    "red": #d44444,
+    "orange": #eba33d,
+    "white": #b7b7b7,
+    "neutral": #767676
+);
+
+@mixin color-modifiers {
+    @each $name, $hex in $colors {
+        &-#{$name} {
+            color: $hex;
+        }
+    }
+}
+
+body {
+    font-family:'Roboto', sans-serif;
+    padding:10px;
+    background-color:$body-bg;
+    overflow:hidden;
+}
+
+.text {
+    @include color-modifiers;
+}
+
+.lambda-block {
+    margin:10px 0;
+
+    &:first-child {
+        margin-top:0;
+    }
+
+    &:last-child {
+        margin-bottom:0;
+    }
+
+    .head {
+        padding:10px;
+        background:$block-head-bg;
+        text-align:left;
+
+        p {
+            font-weight:500;
+            font-size:1rem;
+            margin:0; padding:0;
+            text-shadow:0 2px rgba(0, 0, 0, .2);
+
+            &::before {
+                content:'λ';
+                position:relative;
+                font-weight:700;
+                margin-right:5px;
+                font-size:1.1rem;
+            }
+        }
+    }
+
+    .body {
+        padding:10px 15px;
+        background:$block-body-bg;
+    }
+}
+
+.lambda-block-green {
+    .head {
+        p {
+            &::before {
+                color:map-get($map: $colors, $key: "green");
+            }
+        }
+    }
+}
+
+.lambda-block-blue {
+    .head {
+        p {
+            &::before {
+                color:map-get($map: $colors, $key: "blue");
+            }
+        }
+    }
+}
+
+.lambda-block-orange {
+    .head {
+        p {
+            &::before {
+                color:map-get($map: $colors, $key: "orange");
+            }
+        }
+    }
+}
+
+.lambda-block-red {
+    .head {
+        p {
+            &::before {
+                color:map-get($map: $colors, $key: "red");
+            }
+        }
+    }
+}
+
+.lambda-block-neutral {
+    .head {
+        p {
+            &::before {
+                color:map-get($map: $colors, $key: "neutral");
+            }
+        }
+    }
+}
+
+#logoutput {
+
+    .body {
+        min-height:250px;
+        max-height:250px;
+        word-break:break-all;
+        position:relative;
+    }
+
+    p.line {
+        font-size:.8rem;
+        padding:0; margin:0;
+    }
+
+    .timestamp {
+        opacity:.5;
+        margin-right:5px;
+    }
+}
+
+#droparea {
+    p.drophere {
+        font-weight:900;
+        text-align:center;
+        transition:color .2s ease-in-out;
+        margin:0;
+        padding:50px;
+        border:2px dashed map-get($map: $colors, $key: "grey");
+    }
+
+    &.file-hover {
+        p.drophere {
+            color:map-get($map: $colors, $key: "blue");
+        }
+    }
+}
+
+.ps__rail-y {
+    background:transparent;
+}
+
+#readme {
+
+    .body {
+        min-height:250px;
+        max-height:250px;
+        position:relative;
+
+        p {
+            color:map-get($map: $colors, $key: "neutral");
+            font-size:.8rem;
+        }
+
+        strong {
+            color:map-get($map: $colors, $key: "white");
+        }
+    }
+
+}
+        
+code {
+    font-family:'Roboto', sans-serif;
+    padding:1px 7px 2px 7px;
+    color:map-get($map: $colors, $key: "blue");
+    background-color:#1b1b1b;
+}
+
+#settings {
+    .setting {
+        font-size:.8rem;
+        margin:10px 0;
+
+        &:first-child {
+            margin-top:0;
+        }
+
+        &:last-child {
+            margin-bottom:0;
+        }
+        
+        .pretty {
+            .state {
+                label {
+                    text-indent:2.2rem;
+                    .text {
+                        position:relative;
+                        top:2px;
+                    }
+                }
+            }
+        }
+    }
+}

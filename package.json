@@ -1,0 +1,48 @@
+{
+  "name": "movie-ex-gui",
+  "version": "1.0.0",
+  "description": "movie-ex-gui",
+  "main": "dist/main.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "dev": "npm run clean && webpack",
+    "prod": "npm run clean && webpack -p",
+    "start": "electron dist/main.js",
+    "pack": "electron-packager . movie-ex --out=dist/bin --platform=win32 --arch=x64 --icon=src/assets/icon.ico"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "@types/axios": "^0.14.0",
+    "babel-preset-env": "^1.6.1",
+    "bootstrap-css": "^4.0.0-alpha.5",
+    "copy-webpack-plugin": "^6.4.1",
+    "electron": "^11.2.0",
+    "html-webpack-plugin": "5.0.0-alpha.14",
+    "rimraf": "^2.6.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^5.16.0",
+    "webpack-cli": "^4.4.0",
+    "webpack-merge": "^4.1.1"
+  },
+  "dependencies": {
+    "@kaizokupuffball/unrar": "git+https://github.com/kaizokupuffball/unrar.git",
+    "axios": "^0.21.1",
+    "babel-loader": "^8.2",
+    "bluebird": "^3.7.2",
+    "css-loader": "^5.0.1",
+    "jquery": "^3.5.1",
+    "perfect-scrollbar": "^1.5.0",
+    "pretty-checkbox": "^3.0.3",
+    "request": "^2.88.2",
+    "sass": "^1.32.5",
+    "sass-loader": "^10.1.1",
+    "scenex": "github:kaizokupuffball/scenex",
+    "showdown": "^1.9.1",
+    "style-loader": "^2.0.0"
+  }
+}
