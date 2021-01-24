@@ -2,6 +2,11 @@
 Drag and drop movie organizer from scene-release standard naming convention.<br>
 Folders named like this: `( REQ )Some Movie (VHS Rip)` will **NOT** work as this is not a scene-release standard.
 
+**Building and installation**
+As of know you can clone the repo.<br>
+Then run: `npm install && npm run dev && npm run start` to start the application.<br>
+Compiled releases will come later.
+
 **Usage**<br>
 Example folder: `Citizenfour.2014.1080p.BluRay.DTS.x264-HDMaNiAcS`<br>
 [Scenex](//github.com/kaizokupuffball/scenex) extract tags from the folder name.<br>
