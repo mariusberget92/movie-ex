@@ -8,10 +8,16 @@
     "dev": "npm run clean && webpack",
     "prod": "npm run clean && webpack -p",
     "start": "electron dist/main.js",
-    "pack": "electron-packager . movie-ex --out=dist/bin --platform=win32 --arch=x64 --icon=src/assets/icon.ico"
+    "pack": "electron-packager dist movie-ex --out=packaged --platform=win32 --arch=x64 --icon=dist/assets/icon.ico"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "movie",
+    "organizer",
+    "drag",
+    "drop",
+    "scenerelease"
+  ],
+  "author": "kaizokupuffball",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -22,6 +28,7 @@
     "bootstrap-css": "^4.0.0-alpha.5",
     "copy-webpack-plugin": "^6.4.1",
     "electron": "^11.2.0",
+    "electron-packager": "^15.2.0",
     "html-webpack-plugin": "5.0.0-alpha.14",
     "rimraf": "^2.6.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
@@ -35,6 +42,7 @@
     "babel-loader": "^8.2",
     "bluebird": "^3.7.2",
     "css-loader": "^5.0.1",
+    "electron-unhandled": "^3.0.2",
     "jquery": "^3.5.1",
     "perfect-scrollbar": "^1.5.0",
     "pretty-checkbox": "^3.0.3",

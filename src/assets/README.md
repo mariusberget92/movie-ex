@@ -8,8 +8,9 @@ Example folder: `Citizenfour.2014.1080p.BluRay.DTS.x264-HDMaNiAcS`<br>
 Tags are used to rename the movie folder and file following this standard: `Citizenfour (2014)/Citizenfour [BluRay-1080p].ext`<br>
 
 **Deletions**<br>
-All files with these extensions will be deleted automatically: `['.sfv', '.nfo', '.jpg', '.png', '.bmp', '.gif', '.cc', '.to', '.txt', '.text']`<br>
-All folders the corresponds to theese will also be deleted: `['proof', 'sample', 'screenshots']`
+All files with these extensions will be deleted automatically: `.sfv .nfo .jpg .png .bmp .gif .cc .to .txt .text`<br>
+All folders the corresponds to theese will also be deleted: `proof sample screenshots`<br>
+All `.rar` files will be deleted after extraction
 
 **Organizing**<br>
 The app automatically downloads a poster file called `poster.jpg` into the movie folder using tMDB API.

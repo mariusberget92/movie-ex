@@ -2,19 +2,15 @@
 Drag and drop movie organizer from scene-release standard naming convention.<br>
 Folders named like this: `( REQ )Some Movie (VHS Rip)` will **NOT** work as this is not a scene-release standard.
 
-**Building and installation**
-As of know you can clone the repo.<br>
-Then run: `npm install && npm run dev && npm run start` to start the application.<br>
-Compiled releases will come later.
-
 **Usage**<br>
 Example folder: `Citizenfour.2014.1080p.BluRay.DTS.x264-HDMaNiAcS`<br>
 [Scenex](//github.com/kaizokupuffball/scenex) extract tags from the folder name.<br>
 Tags are used to rename the movie folder and file following this standard: `Citizenfour (2014)/Citizenfour [BluRay-1080p].ext`<br>
 
 **Deletions**<br>
-All files with these extensions will be deleted automatically: `['.sfv', '.nfo', '.jpg', '.png', '.bmp', '.gif', '.cc', '.to', '.txt', '.text']`<br>
-All folders the corresponds to theese will also be deleted: `['proof', 'sample', 'screenshots']`
+All files with these extensions will be deleted automatically: `.sfv .nfo .jpg .png .bmp .gif .cc .to .txt .text`<br>
+All folders the corresponds to theese will also be deleted: `proof sample screenshots`<br>
+All `.rar` files will be deleted after extraction
 
 **Organizing**<br>
 The app automatically downloads a poster file called `poster.jpg` into the movie folder using tMDB API.

@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const ps2 = new PerfectScrollbar('#readme .body');
 
     // Push readme file into readme area in the application
-    const readme = readFileSync('dist/readme.md').toString();
+    const readme = readFileSync('readme.md').toString();
     var readmeElement = document.querySelector('#readme .body');
     readmeElement.innerHTML = converter.makeHtml(readme);
 
