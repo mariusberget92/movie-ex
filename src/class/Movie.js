@@ -263,7 +263,7 @@ export class Movie {
                     this.log(`${language[Config.language].deleteFileError}${err}`, 'text-red');
                 });
             } else {
-                await fs.rmdirAsync(itemAbsolutePath)
+                await fs.rmdirAsync(itemAbsolutePath, { recursive: true })
                 .then(() => {
                     this.log(`${language[Config.language].deleteDirectorySuccess}${item}`, 'text-green');
                 })
