@@ -6,7 +6,7 @@
  * subExtensions: [] What subtitle extensions we are moving to /subs
  * subPath: Relative path from the movie folder to the subs folder
  */
-export const Config = {
+/*export const Config = {
     language: 'en',
     api: {
         key: '5b9f43c33fe73da8f21b58d9b45c5c70',
@@ -21,4 +21,21 @@ export const Config = {
     movieExtensions: ['.avi', '.mkv', '.mp4'],
     subExtensions: ['.srt', '.sub', '.idx', '.ssa', '.ass'],
     subPath: '/subs'
-};
+};*/
+
+export default {
+    "language": "en",
+    "api": {
+        "key": "5b9f43c33fe73da8f21b58d9b45c5c70",
+        "searchUrl": "https://api.themoviedb.org/3/search/movie",
+        "posterUrl": "https://image.tmdb.org/t/p/w780",
+        "posterFilename": "poster.jpg",
+    },
+    "delete": {
+        "extensions": [".sfv", ".nfo", ".jpg", ".png", ".bmp", ".gif", ".cc", ".to", ".txt", ".text"],
+        "directories": ["proof", "sample", "screenshots"]
+    },
+    "movieExtensions": [".avi", ".mkv", ".mp4"],
+    "subExtensions": [".srt", ".sub", ".idx", ".ssa", ".ass"],
+    "subPath": "/subs"
+}

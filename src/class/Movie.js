@@ -1,11 +1,11 @@
-import { Config } from '../config/config';
-import language from '../assets/language';
+import { ipcRenderer } from 'electron';
+import config from '../config/config';
+import language from '../config/language';
+import axios from 'axios';
 import path from 'path';
 import scenex from 'scenex';
 import Promise from 'bluebird';
 import { URLSearchParams } from 'url';
-import { ipcRenderer } from 'electron';
-import axios from 'axios';
 import { Unrar } from '@kaizokupuffball/unrar';
 const fs = Promise.promisifyAll(require('fs'));
 
@@ -85,12 +85,12 @@ export class Movie {
                 var fileExt = path.extname(file);
 
                 // Delete files based on extensions
-                if (Config.delete.extensions.includes(fileExt)) {
+                if (config.delete.extensions.includes(fileExt)) {
                     await this.deleteItem(this.#movie.new.absolutePath, file);
                 }
 
                 // Delete directories
-                if (Config.delete.directories.includes(file)) {
+                if (config.delete.directories.includes(file)) {
                     await this.deleteItem(this.#movie.new.absolutePath, file);
                 }
 
@@ -107,7 +107,7 @@ export class Movie {
             }
             
             // Create subtitles directory
-            await this.makeDirectory(this.#movie.new.absolutePath, Config.subPath);
+            await this.makeDirectory(this.#movie.new.absolutePath, config.subPath);
 
             // After all the deletions we need to 
             // scan the directory again to update the files array
@@ -120,15 +120,15 @@ export class Movie {
                 var fileExt = path.extname(file);
 
                 // Move the subtitles to the /subs directory
-                if (Config.subExtensions.includes(fileExt)) {
+                if (config.subExtensions.includes(fileExt)) {
                     await this.rename(
                         path.join(this.#movie.new.absolutePath, file),
-                        path.join(this.#movie.new.absolutePath, Config.subPath, file)
+                        path.join(this.#movie.new.absolutePath, config.subPath, file)
                     );
                 }
 
                 // Rename the movie file
-                if (Config.movieExtensions.includes(fileExt)) {
+                if (config.movieExtensions.includes(fileExt)) {
 
                     // Just some type normalization
                     if (this.#movie.tags.type.match(/bluray/i))             { this.#movie.tags.type = 'BluRay'; }
@@ -157,7 +157,7 @@ export class Movie {
             }
 
             this.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------', 'text-neutral');
-            resolve(`${language[Config.language].movieProcessSuccess}${this.#movie.tags.title}`);
+            resolve(`${language[config.language].movieProcessSuccess}${this.#movie.tags.title}`);
 
         });
 
@@ -178,12 +178,12 @@ export class Movie {
             if (rarFile.length <= 0) {
                 resolve('No .rar file found');
             } else {
-                this.log(`${language[Config.language].rarFound}`, 'text-neutral');
+                this.log(`${language[config.language].rarFound}`, 'text-neutral');
             }
 
             // Extraction progress
             extractor.on('progress', async (percent) => {
-                this.log(`${language[Config.language].rarProgress} ${percent}%`, 'text-neutral');
+                this.log(`${language[config.language].rarProgress} ${percent}%`, 'text-neutral');
             });
 
             // Extract
@@ -193,10 +193,10 @@ export class Movie {
                 command: 'e',
                 switches: ['-o+', '-idcd']
             }).then(() => {
-                this.log(`${language[Config.language].rarDone}`, 'text-green');
+                this.log(`${language[config.language].rarDone}`, 'text-green');
                 resolve('Extraction done!');
             }).catch((err) => {
-                this.log(`${language[Config.language].rarError}${err}`, 'text-red');
+                this.log(`${language[config.language].rarError}${err}`, 'text-red');
                 resolve('Extraction error!');
             });
 
@@ -210,10 +210,10 @@ export class Movie {
     async downloadPoster() {
 
         // This is the url used to search for the poster we want
-        var searchUrl = new URL(Config.api.searchUrl);
+        var searchUrl = new URL(config.api.searchUrl);
         searchUrl.search = new URLSearchParams({
             page: 1, 
-            api_key: Config.api.key,
+            api_key: config.api.key,
             query: this.#movie.tags.title,
             year: this.#movie.tags.year
         });
@@ -224,14 +224,14 @@ export class Movie {
 
 			// No results
 			if (resp.data.total_results <= 0) {
-                this.log(`${language[Config.language].posterNotFound}`, 'text-orange');
+                this.log(`${language[config.language].posterNotFound}`, 'text-orange');
                 return;
             } 
             
             // Invoke poster download
             await ipcRenderer.invoke('downloadPoster', {
-                src: Config.api.posterUrl + resp.data.results[0].poster_path,
-                dest: path.join(this.#movie.new.absolutePath, Config.api.posterFilename)
+                src: config.api.posterUrl + resp.data.results[0].poster_path,
+                dest: path.join(this.#movie.new.absolutePath, config.api.posterFilename)
             }).then((result) => {
                 this.log(result, 'text-green');
             }).catch((result) => {
@@ -240,7 +240,7 @@ export class Movie {
             
         })
         .catch(async (err) => {
-            this.log(`${language[Config.language].posterCouldNotLoadAPI}${err}`, 'text-red');
+            this.log(`${language[config.language].posterCouldNotLoadAPI}${err}`, 'text-red');
         });
 
     }
@@ -257,23 +257,23 @@ export class Movie {
             if (stat.isFile()) {
                 await fs.unlinkAsync(itemAbsolutePath)
                 .then(() => {
-                    this.log(`${language[Config.language].deleteFileSuccess}${item}`, 'text-green');
+                    this.log(`${language[config.language].deleteFileSuccess}${item}`, 'text-green');
                 })
                 .catch((err) => {
-                    this.log(`${language[Config.language].deleteFileError}${err}`, 'text-red');
+                    this.log(`${language[config.language].deleteFileError}${err}`, 'text-red');
                 });
             } else {
                 await fs.rmdirAsync(itemAbsolutePath, { recursive: true })
                 .then(() => {
-                    this.log(`${language[Config.language].deleteDirectorySuccess}${item}`, 'text-green');
+                    this.log(`${language[config.language].deleteDirectorySuccess}${item}`, 'text-green');
                 })
                 .catch((err) => {
-                    this.log(`${language[Config.language].deleteDirectoryError}${err}`, 'text-red');
+                    this.log(`${language[config.language].deleteDirectoryError}${err}`, 'text-red');
                 });
             }
         })
         .catch(async (err) => {
-            this.log(`${language[Config.language].fsStatError}${err}`, 'text-red');
+            this.log(`${language[config.language].fsStatError}${err}`, 'text-red');
         });
     }
 
@@ -285,10 +285,10 @@ export class Movie {
     async makeDirectory(absolutePath, dirName) {
         await fs.mkdirAsync(path.join(absolutePath, dirName), { recursive: true })
         .then(() => {
-            this.log(`${language[Config.language].createDirectorySuccess} ${path.join(this.#movie.new.dirName, dirName)}`, 'text-green');
+            this.log(`${language[config.language].createDirectorySuccess} ${path.join(this.#movie.new.dirName, dirName)}`, 'text-green');
         })
         .catch((err) => {
-            this.log(`${language[Config.language].createDirectoryError}${err}`, 'text-red');
+            this.log(`${language[config.language].createDirectoryError}${err}`, 'text-red');
         });
     }
 
@@ -302,7 +302,7 @@ export class Movie {
             this.#movie.files = files;
         })
         .catch((err) => {
-            this.log(`${language[Config.language].filesScannedError}${err}`, 'text-red');
+            this.log(`${language[config.language].filesScannedError}${err}`, 'text-red');
         });
     }
 
@@ -315,10 +315,10 @@ export class Movie {
     async rename(src, dest) {
         await fs.renameAsync(src, dest)
         .then(() => {
-            this.log(`${language[Config.language].itemRenameSuccess}${src} -> ${dest}`, 'text-green');
+            this.log(`${language[config.language].itemRenameSuccess}${src} -> ${dest}`, 'text-green');
         })
         .catch((err) => {
-            this.log(`${language[Config.language].itemRenameError}${err}`, 'text-red');
+            this.log(`${language[config.language].itemRenameError}${err}`, 'text-red');
         });
     }
 
@@ -328,7 +328,6 @@ export class Movie {
      * @param {String} type The type of message (error or success)
      */
     log(message, type) {
-
         var log = document.querySelector('#logoutput > .body');
         var p = document.createElement('p');
         var span = document.createElement('span');

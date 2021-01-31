@@ -1,10 +1,9 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
-import { Config } from './config/config';
-import language from './assets/language';
-import axios from 'axios';
-import { join } from 'path';
-import Promise from 'bluebird';
 import regeneratorRuntime from 'regenerator-runtime';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import config from './config/config';
+import language from './config/language';
+import axios from 'axios';
+import Promise from 'bluebird';
 const fs = Promise.promisifyAll(require('fs'));
 let win = null;
 
@@ -25,17 +24,17 @@ app.on('ready', () => {
 				
 				// When finished, send reply back
 				writeStream.on('finish', () => {
-					resolve(`${language[Config.language].posterDownloaded}`);
+					resolve(`${language[config.language].posterDownloaded}`);
 				});
 	
 				// On error writing, send reply back
 				writeStream.on('error', (err) => {
-					reject(`${language[Config.language].writeToFileError}${err}`);
+					reject(`${language[config.language].writeToFileError}${err}`);
 				});
 	
 			})
 			.catch((err) => {
-				reject(`${language[Config.language].posterCouldNotLoadAPI}${err}`);
+				reject(`${language[config.language].posterCouldNotLoadAPI}${err}`);
 			});	
 		})
 
@@ -47,7 +46,7 @@ app.on('ready', () => {
 		width: 990,
 		height: 882,
 		resizable: false,
-		icon: join(__dirname, './assets/icon.ico'),
+		//icon: './assets/icon.ico',
 		frame: false,
 		webPreferences: {
 			nodeIntegration: true,
@@ -56,15 +55,12 @@ app.on('ready', () => {
 		}
 	});
 
-	win.loadFile('index.html');
+	win.loadFile('./index.html');
 
 	// Close
 	win.on('closed', () => {
 		win = null
 	});
-
-	// Dev tools
-	//win.openDevTools();
 
 });
 

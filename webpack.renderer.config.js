@@ -61,28 +61,29 @@ const renderer = merge(base, {
     // Use HtmlWebpackPlugin to inject JS into
     // our HTML file
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './src/assets/index.html',
       publicPath: '',
-      inject: 'body'
+      inject: 'body',
+      filename: path.join(buildPath, '/index.html')
     }),
 
     // Copy the unrar.exe file to the buildpath
     new CopyPlugin({
       patterns: [
         { 
-          from: './bin/win32/unrar.exe',
-          to: buildPath 
+          from: './bin/',
+          to: path.join(buildPath, '/bin') 
         }, 
         {
           from: './src/assets/readme.md',
-          to: buildPath
+          to: path.join(buildPath, '/assets/readme.md')
         }, {
           from: './src/assets/icons',
-          to: path.join(buildPath, '/icons')
+          to: path.join(buildPath, '/assets/icons')
         },
         {
           from: './src/assets/icon.ico',
-          to: buildPath
+          to: path.join(buildPath, '/assets/icon.ico')
         }
       ],
     })

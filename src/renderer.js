@@ -1,23 +1,30 @@
-// Shell access for links in the application
-const shell = require('electron').shell;
-
 // Apparently we need this...
 import regeneratorRuntime from 'regenerator-runtime';
 
-// Movii class
-//import { Movii } from './class/Movii'
+// Shell access for links in the application
+const shell = require('electron').shell;
+
+// Movie class
 import { Movie } from './class/Movie';
 
 // App styling
 import 'bootstrap-css';
-import './assets/app.scss';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import 'pretty-checkbox/src/pretty-checkbox.scss'
+import './assets/app.scss';
+
+// Utility:
+// - Scrollbar
+// - Markdown -> HTML
 import PerfectScrollbar from 'perfect-scrollbar';
 import showdown from 'showdown';
 import { readFileSync } from 'fs';
+import path from 'path';
 const converter = new showdown.Converter();
 const remote = require('electron').remote;
+
+// Remote because we have a frameless window
+// and need to create the close/min button ourself
 const win = remote.getCurrentWindow();
 
 // When DOM is loaded, run the app
@@ -27,11 +34,12 @@ document.addEventListener("DOMContentLoaded", function() {
     var droparea = document.querySelector('#droparea');
 
     // Create scrollbars
-    const ps = new PerfectScrollbar('#logoutput > .body');
-    const ps2 = new PerfectScrollbar('#readme .body');
+    new PerfectScrollbar('#logoutput > .body');
+    new PerfectScrollbar('#readme .body');
 
-    // Push readme file into readme area in the application
-    const readme = readFileSync('readme.md').toString();
+    // Grab readme file and convert it to HTML
+    // Then push it onto readme area of the application
+    const readme = readFileSync(path.join(__dirname, 'assets/readme.md')).toString();
     var readmeElement = document.querySelector('#readme .body');
     readmeElement.innerHTML = converter.makeHtml(readme);
 

@@ -18,6 +18,11 @@ const main = merge(base, {
     path: buildPath
   }, 
 
+  // Optimizations
+  optimization: {
+    minimize: false
+  },
+  
   module: {
     rules: [
       {
