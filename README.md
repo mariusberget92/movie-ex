@@ -1,6 +1,10 @@
 **Screenshot**
 ![Screenshot](https://i.imgur.com/yXITBK7.png)
 
+**Install / Usage**
+Currently no packaged binaries for this. To use make sure you have NPM installed.<br>
+Then run: `npm run install && npm run dev` when using for the first time, and `npm run start` to start the application afterwards.
+
 **Description**<br>
 Drag and drop movie organizer from scene-release standard naming convention.<br>
 Folders named like this: `( REQ )Some Movie (VHS Rip)` will **NOT** work as this is not a scene-release standard.
