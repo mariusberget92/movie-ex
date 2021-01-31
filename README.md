@@ -1,3 +1,6 @@
+**Screenshot**
+![Screenshot](https://i.imgur.com/yXITBK7.png)
+
 **Description**<br>
 Drag and drop movie organizer from scene-release standard naming convention.<br>
 Folders named like this: `( REQ )Some Movie (VHS Rip)` will **NOT** work as this is not a scene-release standard.
