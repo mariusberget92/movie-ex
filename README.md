@@ -3,7 +3,7 @@
 
 **Install / Usage**
 Currently no packaged binaries for this. To use make sure you have NPM installed.<br>
-Then run: `npm run install && npm run dev` when using for the first time, and `npm run start` to start the application afterwards.
+Then run: `npm run install && npm run dev` when using for the first time, and `npm run start` to start the application afterwards. *Note* The application is not tested on other than W10! 
 
 **Description**<br>
 Drag and drop movie organizer from scene-release standard naming convention.<br>

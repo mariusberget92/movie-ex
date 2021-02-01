@@ -27,7 +27,8 @@ export class Movie {
         settings: {
             downloadPoster: false,
             extractRar: false
-        }
+        },
+        rarExtractionSuccess: null
     }
     
     /**
@@ -95,7 +96,7 @@ export class Movie {
                 }
 
                 // Delete .r* files (rar files)
-                if ((/(.r..)/i).test(fileExt) && this.#movie.settings.extractRar == true) {
+                if ((/(.r..)/i).test(fileExt) && this.#movie.settings.extractRar == true && this.#movie.rarExtractionSuccess == true) {
                     await this.deleteItem(this.#movie.new.absolutePath, file);
                 }
 
@@ -194,9 +195,11 @@ export class Movie {
                 switches: ['-o+', '-idcd']
             }).then(() => {
                 this.log(`${language[config.language].rarDone}`, 'text-green');
+                this.#movie.rarExtractionSuccess = true;
                 resolve('Extraction done!');
             }).catch((err) => {
                 this.log(`${language[config.language].rarError}${err}`, 'text-red');
+                this.#movie.rarExtractionSuccess = false;
                 resolve('Extraction error!');
             });
 

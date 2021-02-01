@@ -35,7 +35,7 @@ const main = merge(base, {
 
   // Polyfills
   node: {
-    __dirname: true,
+    __dirname: false,
     __filename: false
   },
 

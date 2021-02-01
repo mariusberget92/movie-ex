@@ -3,6 +3,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import config from './config/config';
 import language from './config/language';
 import axios from 'axios';
+import path from 'path';
 import Promise from 'bluebird';
 const fs = Promise.promisifyAll(require('fs'));
 let win = null;
@@ -46,7 +47,7 @@ app.on('ready', () => {
 		width: 990,
 		height: 882,
 		resizable: false,
-		//icon: './assets/icon.ico',
+		icon: path.join(__dirname, './assets/icon.ico'),
 		frame: false,
 		webPreferences: {
 			nodeIntegration: true,
@@ -55,7 +56,7 @@ app.on('ready', () => {
 		}
 	});
 
-	win.loadFile('./index.html');
+	win.loadFile(path.join(__dirname, './index.html'));
 
 	// Close
 	win.on('closed', () => {

@@ -7,7 +7,8 @@
     "clean": "rimraf dist",
     "dev": "npm run clean && webpack",
     "prod": "npm run clean && webpack --mode production",
-    "start": "electron dist/main.js"
+    "start": "electron dist/main.js",
+    "pack-win": "electron-packager . movie-ex --platform=win32 --arch=x64 --icon=src/assets/icon.ico --out=packed --overwrite"
   },
   "keywords": [
     "movie",
@@ -28,6 +29,7 @@
     "copy-webpack-plugin": "^6.4.1",
     "css-loader": "^5.0.1",
     "electron": "^11.2.0",
+    "electron-packager": "^15.2.0",
     "html-webpack-plugin": "5.0.0-alpha.14",
     "request": "^2.88.2",
     "rimraf": "^2.6.2",
