@@ -63,6 +63,14 @@ export class Movie {
             // Grab scenerelease tags
             this.#movie.tags = scenex(this.#movie.old.dirName);
 
+            // Uppercase every word in title
+            var titleWords = this.#movie.tags.title.split(' ');
+            for (let i = 0; i < titleWords.length; i++) {
+                titleWords[i] = titleWords[i][0].toUpperCase() + titleWords[i].substr(1);
+            }
+
+            this.#movie.tags.title = titleWords.join(' ');
+
             // Update the movie directory name and path
             this.#movie.new.dirName = `${this.#movie.tags.title} (${this.#movie.tags.year})`;
             this.#movie.new.absolutePath = path.join(
@@ -85,9 +93,9 @@ export class Movie {
             if (fs.statSync(this.#movie.old.absolutePath).isFile()) {
 
                 // File and directory name
-                var baseDir = path.dirname(this.#movie.old.absolutePath);                                   // C:\Users\Anoneemo\Downloads\dl
-                var dirName = path.basename(this.#movie.old.absolutePath).replace(/\.[^/.]+$/, '');         // Max.Cloud.2020.1080p.BluRay.DD+5.1.x264-iFT
-                var fileName = path.basename(this.#movie.old.absolutePath);                                 // Max.Cloud.2020.1080p.BluRay.DD+5.1.x264-iFT.mkv
+                var baseDir = path.dirname(this.#movie.old.absolutePath);
+                var dirName = path.basename(this.#movie.old.absolutePath).replace(/\.[^/.]+$/, '');
+                var fileName = path.basename(this.#movie.old.absolutePath);
 
                 // Create directory for the file
                 await this.createDirForFile(path.join(baseDir, dirName));
