@@ -41,21 +41,36 @@ export class Movie {
         this.#movie.settings.downloadPoster = settingDownloadPoster;
         this.#movie.settings.extractRar = settingExtractRar;
 
+        // Set movie properties
+        this.setProperties(absolutePath);
+
+    }
+
+    /**
+     * Set movie properties like old and new dirnames and paths
+     * @param {PathLike} absolutePath 
+     */
+    setProperties(absolutePath) {
+
         // Set absolute path for this movie object
         this.#movie.old.absolutePath = absolutePath;
 
-        // The movie folder name
-        this.#movie.old.dirName = path.basename(this.#movie.old.absolutePath);
+        if (fs.statSync(absolutePath).isDirectory()) {
 
-        // Grab scenerelease tags
-        this.#movie.tags = scenex(this.#movie.old.dirName);
+            // The movie folder name
+            this.#movie.old.dirName = path.basename(this.#movie.old.absolutePath);
 
-        // Update the movie directory name and path
-        this.#movie.new.dirName = `${this.#movie.tags.title} (${this.#movie.tags.year})`;
-        this.#movie.new.absolutePath = path.join(
-            this.#movie.old.absolutePath.substr(0, this.#movie.old.absolutePath.lastIndexOf('\\')),
-            this.#movie.new.dirName
-        );
+            // Grab scenerelease tags
+            this.#movie.tags = scenex(this.#movie.old.dirName);
+
+            // Update the movie directory name and path
+            this.#movie.new.dirName = `${this.#movie.tags.title} (${this.#movie.tags.year})`;
+            this.#movie.new.absolutePath = path.join(
+                this.#movie.old.absolutePath.substr(0, this.#movie.old.absolutePath.lastIndexOf('\\')),
+                this.#movie.new.dirName
+            );
+
+        }
 
     }
 
@@ -65,6 +80,31 @@ export class Movie {
     async process() {
 
         return new Promise(async (resolve, reject) => {
+
+            // Check if dropped item is folder or file
+            if (fs.statSync(this.#movie.old.absolutePath).isFile()) {
+
+                // File and directory name
+                var baseDir = path.dirname(this.#movie.old.absolutePath);                                   // C:\Users\Anoneemo\Downloads\dl
+                var dirName = path.basename(this.#movie.old.absolutePath).replace(/\.[^/.]+$/, '');         // Max.Cloud.2020.1080p.BluRay.DD+5.1.x264-iFT
+                var fileName = path.basename(this.#movie.old.absolutePath);                                 // Max.Cloud.2020.1080p.BluRay.DD+5.1.x264-iFT.mkv
+
+                // Create directory for the file
+                await this.createDirForFile(path.join(baseDir, dirName));
+
+                // New absolute path
+                var newAbsolutePath = path.join(baseDir, dirName, fileName);
+
+                // Move the file into the newly created directory
+                await this.rename(
+                    this.#movie.old.absolutePath,
+                    newAbsolutePath
+                );
+                
+                // Update movie object
+                this.setProperties(path.join(baseDir, dirName));
+
+            }
 
             // Rename the movie folder first so the folder
             // won't be busy later when we want to download or change names of
@@ -96,6 +136,7 @@ export class Movie {
                 }
 
                 // Delete .r* files (rar files)
+                // Only if rar extraction succeeds
                 if ((/(.r..)/i).test(fileExt) && this.#movie.settings.extractRar == true && this.#movie.rarExtractionSuccess == true) {
                     await this.deleteItem(this.#movie.new.absolutePath, file);
                 }
@@ -162,6 +203,21 @@ export class Movie {
 
         });
 
+    }
+
+    /**
+     * 
+     * @param {PathLike} dir 
+     * @param {PathLike} file 
+     */
+    async createDirForFile(dirAbsolutePath) {
+        await fs.mkdirAsync(dirAbsolutePath, { recursive: true })
+        .then(() => {
+            this.log(`${language[config.language].createDirectoryForFileSuccess}${dirAbsolutePath}`, 'text-green');
+        })
+        .catch((err) => {
+            this.log(`${language[config.language].createDirectoryForFileError}${err}`, 'text-red');
+        });
     }
 
     /**
@@ -288,7 +344,7 @@ export class Movie {
     async makeDirectory(absolutePath, dirName) {
         await fs.mkdirAsync(path.join(absolutePath, dirName), { recursive: true })
         .then(() => {
-            this.log(`${language[config.language].createDirectorySuccess} ${path.join(this.#movie.new.dirName, dirName)}`, 'text-green');
+            this.log(`${language[config.language].createDirectorySuccess}${path.join(this.#movie.new.dirName, dirName)}`, 'text-green');
         })
         .catch((err) => {
             this.log(`${language[config.language].createDirectoryError}${err}`, 'text-red');

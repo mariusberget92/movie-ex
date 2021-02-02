@@ -18,7 +18,9 @@ export default {
         "filesScannedError": "Could not scan files: ",
         "movieProcessSuccess": "Movie done processing: ",
         "fsStatError": "Could not get FS.STAT info: ",
-        "writeToFileError": "Could not write to file: "
+        "writeToFileError": "Could not write to file: ",
+        "createDirectoryForFileSuccess": "Created directory: ",
+        "createDirectoryForFileError": "Could not create directory: "
     },
     "no": {
         "rarFound": "Rar arkiv funnet, pakker ut...",
@@ -39,6 +41,8 @@ export default {
         "filesScannedError": "Kunne ikke skanne filer: ",
         "movieProcessSuccess": "Film ferdig organisert: ",
         "fsStatError": "Kunne ikke hente FS.STAT info: ",
-        "writeToFileError": "Kunne ikke skrive til fil: "
+        "writeToFileError": "Kunne ikke skrive til fil: ",
+        "createDirectoryForFileSuccess": "Mappe opprettet: ",
+        "createDirectoryForFileError": "Kunne ikke oppprette mappe for: "
     }
 }
