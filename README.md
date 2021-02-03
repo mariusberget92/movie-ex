@@ -13,6 +13,7 @@ Folders named like this: `( REQ )Some Movie (VHS Rip)` will **NOT** work as this
 Example folder: `Citizenfour.2014.1080p.BluRay.DTS.x264-HDMaNiAcS`<br>
 [Scenex](//github.com/kaizokupuffball/scenex) extract tags from the folder name.<br>
 Tags are used to rename the movie folder and file following this standard: `Citizenfour (2014)/Citizenfour [BluRay-1080p].ext`<br>
+Single files instead of folders are also supported as long as the file is named by the same standards.
 
 **Deletions**<br>
 All files with these extensions will be deleted automatically: `.sfv .nfo .jpg .png .bmp .gif .cc .to .txt .text`<br>
