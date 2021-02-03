@@ -206,7 +206,7 @@ export class Movie {
                 await this.downloadPoster();
             }
 
-            this.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------', 'text-neutral');
+            this.log('Complete!<div class="separator"></div>', 'text-neutral');
             resolve(`${language[config.language].movieProcessSuccess}${this.#movie.tags.title}`);
 
         });
@@ -395,6 +395,7 @@ export class Movie {
      * @param {String} type The type of message (error or success)
      */
     log(message, type) {
+        
         var log = document.querySelector('#logoutput > .body');
         var p = document.createElement('p');
         var span = document.createElement('span');

@@ -218,6 +218,15 @@ body {
         opacity:.5;
         margin-right:5px;
     }
+
+    .separator {
+        display:inline-block;
+        width:100%;
+        position:relative;
+        top:-4px;
+        border-bottom:1px solid map-get($map: $colors, $key: "neutral");
+        opacity:.5;
+    } 
 }
 
 #droparea {
@@ -227,7 +236,7 @@ body {
         transition:color .2s ease-in-out;
         margin:0;
         padding:50px;
-        border:2px dashed map-get($map: $colors, $key: "grey");
+        border:2px dashed map-get($map: $colors, $key: "neutral");
     }
 
     &.file-hover {
