@@ -1,2 +1,3 @@
+- Add language selector
 - Re-think the output log separator... Alot of dashes makes no sense, maybe use <hr />? 
 - Create a new class for TV-Shows (would need some tweaking to the Scenex library though)
