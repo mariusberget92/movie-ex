@@ -1,6 +1,9 @@
 **Screenshot**
 ![Screenshot](https://i.imgur.com/yXITBK7.png)
 
+**Notice!**
+Does **NOT** work for TVShows or episodes. Only movies!
+
 **Install / Usage**
 Currently no packaged binaries for this. To use make sure you have NPM installed.<br>
 Then run: `npm run install && npm run dev` when using for the first time, and `npm run start` to start the application afterwards. *Note* The application is not tested on other than W10! 
