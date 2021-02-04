@@ -24,10 +24,7 @@ export class Movie {
         },
         files: [],
         tags: {},
-        settings: {
-            downloadPoster: false,
-            extractRar: false
-        },
+        settings: null,
         rarExtractionSuccess: null
     }
     
@@ -35,11 +32,10 @@ export class Movie {
      * Constructor
      * @param {PathLike} absolutePath 
      */
-    constructor(absolutePath, settingExtractRar, settingDownloadPoster) {
+    constructor(absolutePath, settings) {
 
         // Set settings
-        this.#movie.settings.downloadPoster = settingDownloadPoster;
-        this.#movie.settings.extractRar = settingExtractRar;
+        this.#movie.settings = settings;
 
         // Set movie properties
         this.setProperties(absolutePath);

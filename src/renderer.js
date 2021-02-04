@@ -62,14 +62,17 @@ document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
         droparea.classList.remove('file-hover');
 
-        // Get settings state
-        var extractRar = document.querySelector('.setting input[name="rarExtraction"]');
-        var downloadPoster = document.querySelector('.setting input[name="posterDownload"]');
+        // Get settings
+        var settings = {};
+        for (var setting of document.querySelectorAll('.setting input')) {
+            settings[setting.name] = (setting.checked) ? true : false;
+        }
 
         for (var [i, file] of Object.entries(e.dataTransfer.files)) {
-            var x = new Movie(file.path, extractRar.checked, downloadPoster.checked);
+            var x = new Movie(file.path, settings);
             console.log(await x.process());
         }
+
         return false;
     };
     
