@@ -84,6 +84,10 @@ const renderer = merge(base, {
         {
           from: './src/assets/icon.ico',
           to: path.join(buildPath, '/assets/icon.ico')
+        },
+        {
+          from: 'node_modules/mediainfo-wrapper/lib',
+          to: path.join(buildPath, '/lib')
         }
       ],
     })

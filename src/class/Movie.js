@@ -3,7 +3,7 @@ import config from '../config/config';
 import language from '../config/language';
 import axios from 'axios';
 import path from 'path';
-import mediaInfo, { MediaInfo } from 'mediainfo.js';
+import MI from 'mediainfo-wrapper';
 import scenex from 'scenex';
 import Promise from 'bluebird';
 import { URLSearchParams } from 'url';
@@ -59,6 +59,7 @@ export class Movie {
 
             // Grab scenerelease tags
             this.#movie.tags = scenex(this.#movie.old.dirName);
+            console.log(this.#movie.tags);
 
             // Uppercase every word in title
             var titleWords = this.#movie.tags.title.split(' ');
@@ -69,7 +70,10 @@ export class Movie {
             this.#movie.tags.title = titleWords.join(' ');
 
             // Update the movie directory name and path
-            this.#movie.new.dirName = `${this.#movie.tags.title} (${this.#movie.tags.year})`;
+            this.#movie.new.dirName = (typeof this.#movie.tags.year != 'undefined')
+            ?  `${this.#movie.tags.title} (${this.#movie.tags.year})`
+            :  `${this.#movie.tags.title}`;
+
             this.#movie.new.absolutePath = path.join(
                 this.#movie.old.absolutePath.substr(0, this.#movie.old.absolutePath.lastIndexOf('\\')),
                 this.#movie.new.dirName
@@ -197,7 +201,9 @@ export class Movie {
                     // Store media-info data and relase name to
                     // .nfo file in the movie directory
                     if (this.#movie.settings.storeNfo == true) {
-                        await this.storeMediaInfoData(path.join(this.#movie.new.absolutePath, name));
+                        await this.storeMediaInfoDataFromMovieFile(
+                            path.join(this.#movie.new.absolutePath, name)
+                        );
                     }
 
                 }
@@ -216,7 +222,21 @@ export class Movie {
 
     }
 
-    async storeMediaInfoData(movieFile) {
+    async storeMediaInfoDataFromMovieFile(absolutePath) {
+
+        return new Promise((resolve, reject) => {
+            MI(absolutePath)
+            .then((data) => {
+                for (const mediainfo of Object.entries(data)) {
+                    console.log(mediainfo);
+                }
+                resolve('Media info grabbed!');
+            })
+            .catch((err) => {
+                reject('Could not grab media information');
+            });
+        });
+
     }
 
     /**
