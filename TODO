@@ -1,3 +1,4 @@
 - Add language selector
+- Add "Do not put movie into a folder" option (this would opt out poster/archives)
 - Check out if one could store some media-info and the original release name into an .nfo file
 - Create a new class for TV-Shows (would need some tweaking to the Scenex library though)

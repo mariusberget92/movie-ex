@@ -3,6 +3,7 @@ import config from '../config/config';
 import language from '../config/language';
 import axios from 'axios';
 import path from 'path';
+import mediaInfo, { MediaInfo } from 'mediainfo.js';
 import scenex from 'scenex';
 import Promise from 'bluebird';
 import { URLSearchParams } from 'url';
@@ -193,6 +194,12 @@ export class Movie {
                         path.join(this.#movie.new.absolutePath, name)
                     );
 
+                    // Store media-info data and relase name to
+                    // .nfo file in the movie directory
+                    if (this.#movie.settings.storeNfo == true) {
+                        await this.storeMediaInfoData(path.join(this.#movie.new.absolutePath, name));
+                    }
+
                 }
 
             }
@@ -207,6 +214,9 @@ export class Movie {
 
         });
 
+    }
+
+    async storeMediaInfoData(movieFile) {
     }
 
     /**

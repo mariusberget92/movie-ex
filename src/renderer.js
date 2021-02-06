@@ -68,9 +68,10 @@ document.addEventListener("DOMContentLoaded", function() {
             settings[setting.name] = (setting.checked) ? true : false;
         }
 
+        // Do the processing for each movie
         for (var [i, file] of Object.entries(e.dataTransfer.files)) {
             var x = new Movie(file.path, settings);
-            console.log(await x.process());
+            await x.process();
         }
 
         return false;
