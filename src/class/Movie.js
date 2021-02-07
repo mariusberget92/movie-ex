@@ -8,6 +8,7 @@ import scenex from 'scenex';
 import Promise from 'bluebird';
 import { URLSearchParams } from 'url';
 import { Unrar } from '@kaizokupuffball/unrar';
+import { write } from 'fs';
 const fs = Promise.promisifyAll(require('fs'));
 
 export class Movie {
@@ -59,7 +60,6 @@ export class Movie {
 
             // Grab scenerelease tags
             this.#movie.tags = scenex(this.#movie.old.dirName);
-            console.log(this.#movie.tags);
 
             // Uppercase every word in title
             var titleWords = this.#movie.tags.title.split(' ');
@@ -201,9 +201,7 @@ export class Movie {
                     // Store media-info data and relase name to
                     // .nfo file in the movie directory
                     if (this.#movie.settings.storeNfo == true) {
-                        await this.storeMediaInfoDataFromMovieFile(
-                            path.join(this.#movie.new.absolutePath, name)
-                        );
+                        await this.getMediaInfo(path.join(this.#movie.new.absolutePath, name));
                     }
 
                 }
@@ -222,18 +220,49 @@ export class Movie {
 
     }
 
-    async storeMediaInfoDataFromMovieFile(absolutePath) {
+    /**
+     * Grab media-info and write to file
+     * along with the original release name
+     * @param {PathLike} absolutePath 
+     */
+    async getMediaInfo(absolutePath) {
 
         return new Promise((resolve, reject) => {
+
+            // Grab media-info
             MI(absolutePath)
             .then((data) => {
-                for (const mediainfo of Object.entries(data)) {
-                    console.log(mediainfo);
+
+                // We only need the audio and video information
+                var audio, video;
+                audio = data[0].audio[0];
+                video = data[0].video[0];
+
+                // Open write stream
+                var nfoFile = absolutePath.replace(/\.[^/.]+$/, '') + '.nfo';
+                var writeToNfo = fs.createWriteStream(nfoFile, { flags: 'a'});
+
+                // Start writing to file
+                writeToNfo.write(path.basename(this.#movie.old.absolutePath).replace(/\.[^/.]+$/, ''));
+                writeToNfo.write(`\r\n \r\n`);
+
+                writeToNfo.write('Audio');
+                for (let [head, info] of Object.entries(audio)) {
+                    writeToNfo.write(`${head}: ${info.join(', ')}\r\n`);
                 }
-                resolve('Media info grabbed!');
+
+                writeToNfo.write(`Video\r\n\r\n`);
+                for (let [head, info] of Object.entries(video)) {
+                    writeToNfo.write(`${head}: ${info.join(', ')}\r\n`);
+                }
+
+                writeToNfo.close();
+
+                resolve('Media info grabbed and written to file!');
+
             })
             .catch((err) => {
-                reject('Could not grab media information');
+                reject('Could not grab media information: ' + err);
             });
         });
 
