@@ -246,12 +246,12 @@ export class Movie {
                 writeToNfo.write(path.basename(this.#movie.old.absolutePath).replace(/\.[^/.]+$/, ''));
                 writeToNfo.write(`\r\n \r\n`);
 
-                writeToNfo.write('Audio');
+                writeToNfo.write(`Audio\r\n`);
                 for (let [head, info] of Object.entries(audio)) {
                     writeToNfo.write(`${head}: ${info.join(', ')}\r\n`);
                 }
 
-                writeToNfo.write(`Video\r\n\r\n`);
+                writeToNfo.write(`\r\nVideo\r\n`);
                 for (let [head, info] of Object.entries(video)) {
                     writeToNfo.write(`${head}: ${info.join(', ')}\r\n`);
                 }
