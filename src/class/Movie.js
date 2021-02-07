@@ -3,10 +3,12 @@ import config from '../config/config';
 import language from '../config/language';
 import axios from 'axios';
 import path from 'path';
+import MI from 'mediainfo-wrapper';
 import scenex from 'scenex';
 import Promise from 'bluebird';
 import { URLSearchParams } from 'url';
 import { Unrar } from '@kaizokupuffball/unrar';
+import { write } from 'fs';
 const fs = Promise.promisifyAll(require('fs'));
 
 export class Movie {
@@ -24,10 +26,7 @@ export class Movie {
         },
         files: [],
         tags: {},
-        settings: {
-            downloadPoster: false,
-            extractRar: false
-        },
+        settings: null,
         rarExtractionSuccess: null
     }
     
@@ -35,11 +34,10 @@ export class Movie {
      * Constructor
      * @param {PathLike} absolutePath 
      */
-    constructor(absolutePath, settingExtractRar, settingDownloadPoster) {
+    constructor(absolutePath, settings) {
 
         // Set settings
-        this.#movie.settings.downloadPoster = settingDownloadPoster;
-        this.#movie.settings.extractRar = settingExtractRar;
+        this.#movie.settings = settings;
 
         // Set movie properties
         this.setProperties(absolutePath);
@@ -72,7 +70,10 @@ export class Movie {
             this.#movie.tags.title = titleWords.join(' ');
 
             // Update the movie directory name and path
-            this.#movie.new.dirName = `${this.#movie.tags.title} (${this.#movie.tags.year})`;
+            this.#movie.new.dirName = (typeof this.#movie.tags.year != 'undefined')
+            ?  `${this.#movie.tags.title} (${this.#movie.tags.year})`
+            :  `${this.#movie.tags.title}`;
+
             this.#movie.new.absolutePath = path.join(
                 this.#movie.old.absolutePath.substr(0, this.#movie.old.absolutePath.lastIndexOf('\\')),
                 this.#movie.new.dirName
@@ -197,6 +198,12 @@ export class Movie {
                         path.join(this.#movie.new.absolutePath, name)
                     );
 
+                    // Store media-info data and relase name to
+                    // .nfo file in the movie directory
+                    if (this.#movie.settings.storeNfo == true) {
+                        await this.getMediaInfo(path.join(this.#movie.new.absolutePath, name));
+                    }
+
                 }
 
             }
@@ -209,6 +216,54 @@ export class Movie {
             this.log('Complete!<div class="separator"></div>', 'text-neutral');
             resolve(`${language[config.language].movieProcessSuccess}${this.#movie.tags.title}`);
 
+        });
+
+    }
+
+    /**
+     * Grab media-info and write to file
+     * along with the original release name
+     * @param {PathLike} absolutePath 
+     */
+    async getMediaInfo(absolutePath) {
+
+        return new Promise((resolve, reject) => {
+
+            // Grab media-info
+            MI(absolutePath)
+            .then((data) => {
+
+                // We only need the audio and video information
+                var audio, video;
+                audio = data[0].audio[0];
+                video = data[0].video[0];
+
+                // Open write stream
+                var nfoFile = absolutePath.replace(/\.[^/.]+$/, '') + '.nfo';
+                var writeToNfo = fs.createWriteStream(nfoFile, { flags: 'a'});
+
+                // Start writing to file
+                writeToNfo.write(path.basename(this.#movie.old.absolutePath).replace(/\.[^/.]+$/, ''));
+                writeToNfo.write(`\r\n \r\n`);
+
+                writeToNfo.write(`Audio\r\n`);
+                for (let [head, info] of Object.entries(audio)) {
+                    writeToNfo.write(`${head}: ${info.join(', ')}\r\n`);
+                }
+
+                writeToNfo.write(`\r\nVideo\r\n`);
+                for (let [head, info] of Object.entries(video)) {
+                    writeToNfo.write(`${head}: ${info.join(', ')}\r\n`);
+                }
+
+                writeToNfo.close();
+
+                resolve('Media info grabbed and written to file!');
+
+            })
+            .catch((err) => {
+                reject('Could not grab media information: ' + err);
+            });
         });
 
     }
