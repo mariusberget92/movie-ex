@@ -1,29 +1,51 @@
 **Screenshot**
-![Screenshot](https://i.imgur.com/yXITBK7.png)
 
-**Install / Usage**
-Currently no packaged binaries for this. To use make sure you have NPM installed.<br>
-Then run: `npm run install && npm run dev` when using for the first time, and `npm run start` to start the application afterwards. *Note* The application is not tested on other than W10! 
+![Screenshot](https://i.imgur.com/NOFyITZ.png)
 
-**Description**<br>
-Drag and drop movie organizer from scene-release standard naming convention.<br>
-Folders named like this: `( REQ )Some Movie (VHS Rip)` will **NOT** work as this is not a scene-release standard.
 
-**Usage**<br>
-Example folder: `Citizenfour.2014.1080p.BluRay.DTS.x264-HDMaNiAcS`<br>
-[Scenex](//github.com/kaizokupuffball/scenex) extract tags from the folder name.<br>
-Tags are used to rename the movie folder and file following this standard: `Citizenfour (2014)/Citizenfour [BluRay-1080p].ext`<br>
-Single files instead of folders are also supported as long as the file is named by the same standards.
 
-**Deletions**<br>
-All files with these extensions will be deleted automatically: `.sfv .nfo .jpg .png .bmp .gif .cc .to .txt .text`<br>
-All folders the corresponds to theese will also be deleted: `proof sample screenshots`<br>
-All `.rar` files will be deleted after extraction
+**Usage**
 
-**Organizing**<br>
-The app automatically downloads a poster file called `poster.jpg` into the movie folder using tMDB API.
-Archive extraction is also supported (in this case `.rar` archives).
-All subtitle files thats in the folder will be moved to `/subs` inside the movie folder.
+Go over to releases and download the  7zip archive containing the executable.
+Or clone the repo and run: `npm install && npm run dev && npm run start`
 
-**Important!**<br>
-Do no try to drag `system32` or whatever into the droparea, as I will not be responsible for any renaming if you don't use the app as intended.
+
+
+**Description**
+
+Drag and drop movie organizer from scene-release standard naming standards.
+Folders named like this: `( REQ )Some Movie (VHS Rip)` will **not** work as this is not a scene-release standard.
+
+
+
+**Usage**
+
+Example folder: `Citizenfour.2014.1080p.BluRay.DTS.x264-HDMaNiAcS`
+Tags are extracted and used to rename the movie folder and file following this standard: `Citizenfour (2014)/Citizenfour [BluRay-1080p].ext`
+The application supports both **folder** and **file** drops, as long as the name of the item dropped is a **scene-release** standard.
+
+
+
+**Deletions**
+
+Extensions: `.sfv`, `.nfo`, `.jpg`, `.png`, `.bmp`, `.gif`, `.cc`, `.to`, `.txt`, `.text`
+Folder or files: `proof`, `sample`, `screenshots`
+RAR archices will be deleted after a **successfull** unpacking.
+
+
+
+**Features**
+
+Toggleable: Downloads a poster file (`poster.jpg`) for the movie (using tMBD API)
+Toggleable: Unpacks RAR archives automatically
+Toggleable: Store a `.nfo` file with media-info and original release name
+Non-toggleable: `.srt`, `.sub`, `.idx`, `.ssa`, `.ass` files will be moved to a `/subs`folder in the movie folder
+Non toggleable: Movie folders will be renamed (please read **usage**)
+
+
+
+**Important**
+
+Only tested on **Windows 10 x64**. The application is delivered as is. If there is any issues, please report them so I may fix them later.
+**Only** movies are supported, not TV-Shows, games or music.
+
