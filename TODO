@@ -1,3 +1,4 @@
 - Add language selector
 - Add "Do not put movie into a folder" option (this would opt out poster/archives)
+- Make the app remembering settings
 - Create a new class for TV-Shows (would need some tweaking to the Scenex library though)
