@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         return false;
     };
-    
+
     // Minimize button
     document.getElementById('min-button').addEventListener("click", event => {
         win.minimize();
@@ -90,6 +90,14 @@ document.addEventListener("DOMContentLoaded", function() {
     // Open external URLS
     addEvent(document, 'click', 'a[href]', function(e) {
         shell.openExternal(e.target.href);
+    });
+
+    // Set cookies
+    addEvent(document, 'change', '.setting', function(e) {
+        var cookies = [];
+        for (var setting of document.querySelectorAll('.setting input')) {
+            cookies.push({ url: 'localhost', name: setting.name, value: setting.checked });
+        }
     });
 
 });
