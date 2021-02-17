@@ -1,6 +1,6 @@
 {
   "name": "movie-ex-gui",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "movie-ex-gui",
   "main": "./dist/main.js",
   "scripts": {
