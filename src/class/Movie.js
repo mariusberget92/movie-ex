@@ -8,7 +8,6 @@ import scenex from 'scenex';
 import Promise from 'bluebird';
 import { URLSearchParams } from 'url';
 import { Unrar } from '@kaizokupuffball/unrar';
-import { write } from 'fs';
 const fs = Promise.promisifyAll(require('fs'));
 
 export class Movie {

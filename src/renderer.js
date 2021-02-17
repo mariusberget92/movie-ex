@@ -4,6 +4,9 @@ import regeneratorRuntime from 'regenerator-runtime';
 // Shell access for links in the application
 const shell = require('electron').shell;
 
+// Cookie package
+require('electron-cookies');
+
 // Movie class
 import { Movie } from './class/Movie';
 
@@ -29,6 +32,18 @@ const win = remote.getCurrentWindow();
 
 // When DOM is loaded, run the app
 document.addEventListener("DOMContentLoaded", function() {
+
+    // Set settings to what is saved in cookie
+    if (document.cookie) {
+        var cookie = document.cookie;
+        for (var setting of document.querySelectorAll('.setting input')) {
+            if (cookie.split(';').some((item) => item.includes(setting.name + '=true'))) {
+                setting.checked = true;
+            } else {
+                setting.checked = false;
+            }
+        }
+    }
 
     // Droparea element
     var droparea = document.querySelector('#droparea');
@@ -76,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         return false;
     };
-    
+
     // Minimize button
     document.getElementById('min-button').addEventListener("click", event => {
         win.minimize();
@@ -90,6 +105,13 @@ document.addEventListener("DOMContentLoaded", function() {
     // Open external URLS
     addEvent(document, 'click', 'a[href]', function(e) {
         shell.openExternal(e.target.href);
+    });
+
+    // Save settings to cookie
+    addEvent(document, 'change', '.setting', function(e) {
+        for (var setting of document.querySelectorAll('.setting input')) {
+            document.cookie = setting.name + '=' + setting.checked + ';';
+        }
     });
 
 });

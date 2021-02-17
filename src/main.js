@@ -1,5 +1,5 @@
 import regeneratorRuntime from 'regenerator-runtime';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, session } from 'electron';
 import config from './config/config';
 import language from './config/language';
 import axios from 'axios';
