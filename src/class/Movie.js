@@ -180,10 +180,11 @@ export class Movie {
                 // Rename the movie file
                 if (config.movieExtensions.includes(fileExt)) {
 
+                    console.log(this.#movie.tags);
                     // Just some type normalization
                     if (this.#movie.tags.type.match(/bluray/i))             { this.#movie.tags.type = 'BluRay'; }
-                    if (this.#movie.tags.type.match(/webdl|web-dl|web/i))   { this.#movie.tags.type = 'WEB-DL'; }
                     if (this.#movie.tags.type.match(/web-rip|webrip/i))     { this.#movie.tags.type = 'WEBRip'; }
+                    if (this.#movie.tags.type.match(/webdl|web-dl|web/i))   { this.#movie.tags.type = 'WEB-DL'; }
                     if (this.#movie.tags.type.match(/dvd|dvd-rip|dvdrip/i)) { this.#movie.tags.type = 'DVDRip'; }
                     if (this.#movie.tags.type.match(/vhs|vhs-rip|vhsrip/i)) { this.#movie.tags.type = 'VHSRip'; }
                     if (this.#movie.tags.type.match(/hdrip|hd-rip/i))       { this.#movie.tags.type = 'HDRip';  }
