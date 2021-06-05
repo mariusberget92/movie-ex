@@ -50,7 +50,7 @@
     "mediainfo-wrapper": "^1.2.0",
     "perfect-scrollbar": "^1.5.0",
     "pretty-checkbox": "^3.0.3",
-    "scenex": "git+https://github.com/kaizokupuffball/scenex.git",
+    "scenex": "github:kaizokupuffball/scenex",
     "showdown": "^1.9.1"
   }
 }
