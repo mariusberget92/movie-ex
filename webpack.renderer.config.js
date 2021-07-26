@@ -64,7 +64,7 @@ const renderer = merge(base, {
       template: './src/assets/index.html',
       publicPath: '',
       inject: 'body',
-      filename: path.join(buildPath, '/index.html')
+      filename: path.join(buildPath, '/index.html'),
     }),
 
     // Copy the unrar.exe file to the buildpath
