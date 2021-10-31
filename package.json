@@ -1,6 +1,6 @@
 {
   "name": "movie-ex-gui",
-  "version": "1.0.2",
+  "version": "1.0.7",
   "description": "movie-ex-gui",
   "main": "./dist/main.js",
   "scripts": {
@@ -15,7 +15,10 @@
     "organizer",
     "drag",
     "drop",
-    "scenerelease"
+    "scenerelease",
+    "gui",
+    "scenerelease",
+    "scenex"
   ],
   "author": "kaizokupuffball",
   "license": "MIT",

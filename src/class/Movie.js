@@ -180,18 +180,18 @@ export class Movie {
                 // Rename the movie file
                 if (config.movieExtensions.includes(fileExt)) {
 
-                    console.log(this.#movie.tags);
                     // Just some type normalization
-                    if (this.#movie.tags.type.match(/bluray/i))             { this.#movie.tags.type = 'BluRay'; }
-                    if (this.#movie.tags.type.match(/web-rip|webrip/i))     { this.#movie.tags.type = 'WEBRip'; }
-                    if (this.#movie.tags.type.match(/webdl|web-dl|web/i))   { this.#movie.tags.type = 'WEB-DL'; }
-                    if (this.#movie.tags.type.match(/dvd|dvd-rip|dvdrip/i)) { this.#movie.tags.type = 'DVDRip'; }
-                    if (this.#movie.tags.type.match(/vhs|vhs-rip|vhsrip/i)) { this.#movie.tags.type = 'VHSRip'; }
-                    if (this.#movie.tags.type.match(/hdrip|hd-rip/i))       { this.#movie.tags.type = 'HDRip';  }
+                    let videoSource = this.#movie.tags.videoSource;
+                    if (videoSource.match(/bluray/i))             { this.#movie.tags.videoSource = 'Bluray'; }
+                    if (videoSource.match(/web-rip|webrip/i))     { this.#movie.tags.videoSource = 'WEBRip'; }
+                    if (videoSource.match(/webdl|web-dl|web/i))   { this.#movie.tags.videoSource = 'WEBDL'; }
+                    if (videoSource.match(/dvd|dvd-rip|dvdrip/i)) { this.#movie.tags.videoSource = 'DVD'; }
+                    if (videoSource.match(/vhs|vhs-rip|vhsrip/i)) { this.#movie.tags.videoSource = 'VHS'; }
+                    if (videoSource.match(/hdrip|hd-rip/i))       { this.#movie.tags.videoSource = 'HDRip';  }
 
                     var name = (typeof this.#movie.tags.resolution == 'undefined')
-                    ? `${this.#movie.tags.title} [${this.#movie.tags.type}]${fileExt}`
-                    : `${this.#movie.tags.title} [${this.#movie.tags.type}-${this.#movie.tags.resolution}]${fileExt}`;
+                    ? `${this.#movie.tags.title} [${this.#movie.tags.videoSource}]${fileExt}`
+                    : `${this.#movie.tags.title} [${this.#movie.tags.videoSource}-${this.#movie.tags.resolution}]${fileExt}`;
 
                     await this.rename(
                         path.join(this.#movie.new.absolutePath, file),
@@ -243,7 +243,8 @@ export class Movie {
                 var writeToNfo = fs.createWriteStream(nfoFile, { flags: 'a'});
 
                 // Start writing to file
-                writeToNfo.write(path.basename(this.#movie.old.absolutePath).replace(/\.[^/.]+$/, ''));
+                //writeToNfo.write(path.basename(this.#movie.old.absolutePath).replace(/\.[^/.]+$/, ''));'
+                writeToNfo.write(path.basename(this.#movie.old.absolutePath));
                 writeToNfo.write(`\r\n \r\n`);
 
                 writeToNfo.write(`Audio\r\n`);

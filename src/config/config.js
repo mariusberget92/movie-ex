@@ -16,7 +16,7 @@ export default {
     },
     "delete": {
         "extensions": [".sfv", ".nfo", ".jpg", ".png", ".bmp", ".gif", ".cc", ".to", ".txt", ".text"],
-        "directories": ["proof", "sample", "screenshots", "posting info"]
+        "directories": ["proof", "sample", "screenshots", "posting info", "screens", ]
     },
     "movieExtensions": [".avi", ".mkv", ".mp4"],
     "subExtensions": [".srt", ".sub", ".idx", ".ssa", ".ass"],
