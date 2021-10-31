@@ -21,7 +21,7 @@ Folders named like this: `( REQ )Some Movie (VHS Rip)` will **not** work as this
 **Usage**
 
 Example folder: `Citizenfour.2014.1080p.BluRay.DTS.x264-HDMaNiAcS`<br>
-Tags are extracted and used to rename the movie folder and file following this standard: `Citizenfour (2014)/Citizenfour [BluRay-1080p].ext`<br>
+Tags are extracted and used to rename the movie folder and file following this standard: `Citizenfour (2014)/Citizenfour [Bluray-1080p].ext`<br>
 The application supports both **folder** and **file** drops, as long as the name of the item dropped is a **scene-release** standard.
 
 
@@ -29,7 +29,7 @@ The application supports both **folder** and **file** drops, as long as the name
 **Deletions**
 
 Extensions: `.sfv`, `.nfo`, `.jpg`, `.png`, `.bmp`, `.gif`, `.cc`, `.to`, `.txt`, `.text`<br>
-Folder or files: `proof`, `sample`, `screenshots`<br>
+Folder or files: `proof`, `sample`, `screenshots`, `screens`<br>
 RAR archices will be deleted after a **successfull** unpacking.
 
 
