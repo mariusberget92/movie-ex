@@ -1,3 +1,13 @@
+**Abandoned**
+
+***As of 17th of january I have decided to abandon this project as Radarr already does what this app does even better. No need to continue on this project.***
+
+
+
+<br><br><br>
+
+
+
 **Screenshot**
 
 ![Screenshot](https://i.imgur.com/NOFyITZ.png)
